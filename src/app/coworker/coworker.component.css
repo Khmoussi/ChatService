@@ -1,0 +1,37 @@
+.coworker{
+  display: flex ;
+  flex-direction: row;
+  align-items: center;
+border-radius: 100em;
+width: 300px;
+height: 55px;
+justify-content: flex-start;
+gap: 10px;
+margin-bottom: 28px;
+
+}
+
+h3{
+  color: #000;
+
+font-family: Open Sans;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin-bottom: -5px;
+}
+p{
+  color: #696969;
+
+font-family: Open Sans;
+font-size: 11px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+img{
+  height: 55px;
+  width: 55px;
+  border-radius: 100%;
+}

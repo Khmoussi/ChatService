@@ -1,0 +1,37 @@
+<div class="chat">
+  <div class="top">
+
+  <div class="coworker">
+    <img src="assets/icons/coworker.jpg"alt=" Image"/>
+    <h2>jeff Bezos</h2>
+   </div>
+   <div class="topIcons">
+    <img src="assets/icons/call.svg"alt=" Image"/>
+    <img src="assets/icons/video.svg"alt=" Image"/>
+    <img src="assets/icons/infocircle.svg"alt=" Image"/>
+
+   </div>
+  </div>
+
+  <div class="mid">
+
+    <div *ngFor="let item of messageList;let i =index">
+      <div [class.div-sent-message]="item.senderId==this.currentCoworker?.Email">
+      <p [class.sent-message]="item.senderId==this.currentCoworker?.Email">
+        {{item.content}}
+      </p>
+    </div>
+    </div>
+
+  </div>
+
+
+
+  <div class="bot">
+    <img src="assets/icons/camera.svg"alt=" Image"/>
+    <img src="assets/icons/gallery.svg"alt=" Image"/>
+    <img src="assets/icons/voicecricle.svg"alt=" Image"/>
+    <input type="text" placeholder="Message" [(ngModel)]="message" name="message">
+    <img src="assets/icons/smileys.svg"alt=" Image" (click)="sendMessage()"/>
+  </div>
+  </div>

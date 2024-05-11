@@ -1,0 +1,20 @@
+<div id="main">
+  <div class="nav+list">
+<app-navigation></app-navigation>
+
+
+<app-coworkers-list *ngIf="ChatRoomSOrCoworkers; else chatGroup"></app-coworkers-list>
+<ng-template #chatGroup>
+  <app-chat-rooms-list></app-chat-rooms-list>
+</ng-template>
+
+</div>
+<div class="chat">
+
+<app-chat id="childChat" *ngIf="ChatRoomSOrCoworkers; else other"></app-chat>
+<ng-template #other>
+  <app-chat-group></app-chat-group>
+</ng-template>
+</div>
+
+</div>

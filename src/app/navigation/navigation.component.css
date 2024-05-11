@@ -1,0 +1,39 @@
+#logoutBtn{
+  height: 75px;
+  width: 75px;
+
+}
+
+.nav{
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+justify-content: space-between;
+width: 30em;}
+.items{
+  display:  flex;
+  flex-direction: row;
+
+}
+.item{
+  display: flex;
+  flex-direction: row;
+align-items: center;
+gap: 5px;
+}
+#mainImg{
+  height: 75px;
+  width: 75px;
+}
+#logoutImg1{
+border-radius: 100%;
+height: 55px;
+width: 55px;
+}
+.logout{
+  display: flex;
+align-items: center;
+justify-content: space-between;
+width: 180px;
+}
+

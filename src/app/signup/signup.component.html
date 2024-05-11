@@ -1,0 +1,29 @@
+
+<div id="main">
+  <div class="left">
+    <img id="mainImg" src="/assets/icons/Logo messenger.png" alt="applogo"/>
+   <p>Login with your phone number or Facebook account</p>
+
+  </div>
+<div class="right">
+  <input id="Firstname" class="input" placeholder="Firstname"   [(ngModel)]="firstname" name="firstname">
+  <input id="Lastname"  class="input" placeholder="Lastname" [(ngModel)]="lastname" name="lastname">
+  <input id="email"     class="input" placeholder="E-mail or Phone Number" [(ngModel)]="email" name="email">
+  <input id="password"  class="input" placeholder="Password" [(ngModel)]="password" name="password">
+  <input id="confirmPassword" class="input" placeholder="Confirm your Password" [(ngModel)]="confirmPassword" name="confirmPassword">
+
+<div id="savelogin">
+  <img src="assets/icons/call.svg" alt="">
+  <h3>Save login info</h3>
+</div>
+<button class="button" (click)="verifySignUp()">Sign Up</button>
+<button class="button" routerLink="/login-component" routerLinkActive="router-link-active"  >Log in</button>
+
+
+</div>
+
+
+
+</div>
+
+

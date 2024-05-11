@@ -1,0 +1,13 @@
+
+<div  class="coworker" *ngFor="let item of coworkerList; let i =index"
+ (click)="bringMessages(i)"
+  [ngStyle]="{'background-color': (  i==clickedItemIndex) ? 'blue' : '#F8F8F8'}">
+<img src="assets/icons/coworker.jpg"alt="Your Image"/>
+  <div>
+    <div class="txt">
+  <h3>{{item.Firstname}}</h3>
+  <p>{{item.Lastname}}</p>
+</div>
+
+</div>
+</div>

@@ -1,0 +1,41 @@
+
+.search{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  width: 300px;
+    height: 35px;
+  border-radius: 30px;
+background: #E2E2E2;
+margin-bottom: 49px;
+}
+input{
+  border-radius: 30px;
+  background: #E2E2E2;
+  width: 300px;
+    outline: none;
+  border: none;
+}
+img{
+  margin-left: 15px;
+  width: 20px;
+height: 20px;
+}
+input::placeholder{
+  color: #696969;
+
+font-family: Open Sans;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+h1{
+  margin-bottom: 32px;
+}
+.scroll{
+  height: 430px;
+  overflow: auto;
+}
+
