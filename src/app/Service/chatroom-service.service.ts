@@ -14,6 +14,10 @@ export class ChatroomServiceService {
   public currentChatroom$=this.currentChatroom.asObservable();
   constructor() {
 
-  
+
    }
+   resetData() {
+    this.chatroomList.next([]);
+    this.currentChatroom.next(undefined);
+  }
 }

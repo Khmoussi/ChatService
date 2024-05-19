@@ -1,8 +1,7 @@
 <div id="main">
-  <div class="nav+list">
+  <div class="nav-list">
 <app-navigation></app-navigation>
-
-
+<app-upload-images *ngIf="toggleEdit"></app-upload-images>
 <app-coworkers-list *ngIf="ChatRoomSOrCoworkers; else chatGroup"></app-coworkers-list>
 <ng-template #chatGroup>
   <app-chat-rooms-list></app-chat-rooms-list>

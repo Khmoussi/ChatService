@@ -1,15 +1,52 @@
 <div class="chat">
   <div class="top">
 
+<!-- List -->
+<div class="list-container" *ngIf="showList" (click)="closeList()">
+  <mat-list class="custom-list">
+    <mat-list-item *ngFor="let coworker of usersNotInCurrentRoom" class="custom-list-item" (click)="itemClicked(coworker)">
+      <mat-icon mat-list-avatar class="custom-avatar">person</mat-icon>
+      <div class="user-details">
+        <h3 mat-line class="user-name">{{ coworker.Firstname + " " + coworker.Lastname }}</h3>
+        <!-- Additional user information -->
+      </div>
+    </mat-list-item>
+  </mat-list>
+</div>
+<!-- End of list -->
+
+
+<!-- List -->
+<div class="list-container" *ngIf="showRoomUsers" (click)="closeRoomUsersList()">
+  <mat-list class="custom-list">
+    <ng-container *ngFor="let coworker of currentChatRoom?._userResponses">
+      <ng-container *ngIf="coworker.Email !== this.currentUserEmail">
+    <mat-list-item  class="custom-list-item" (click)="itemClickedRemovedUser(coworker)">
+      <mat-icon mat-list-avatar class="custom-avatar">person</mat-icon>
+      <div class="user-details">
+        <h3 mat-line class="user-name">{{ coworker.Firstname + " " + coworker.Lastname }}</h3>
+        <!-- Additional user information -->
+      </div>
+    </mat-list-item>
+      </ng-container>
+    </ng-container>
+  </mat-list>
+</div>
+<!-- End of list -->
+
+
   <div class="coworker">
     <img src="assets/icons/coworker.jpg"alt=" Image"/>
-    <h2>jeff Bezos</h2>
+    <h2>{{currentChatRoom?.roomName}}</h2>
    </div>
    <div class="topIcons">
     <img src="assets/icons/call.svg"alt=" Image"/>
     <img src="assets/icons/video.svg"alt=" Image"/>
     <img src="assets/icons/infocircle.svg"alt=" Image"/>
-
+    <div *ngIf ="currentChatRoom?.admin === currentUserEmail">
+      <button (click)="toggleList()">add user</button>
+      <button (click)="toggleRemoveList()">remove user</button>
+    </div>
    </div>
   </div>
 

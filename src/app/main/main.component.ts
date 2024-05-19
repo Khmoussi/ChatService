@@ -14,6 +14,7 @@ import * as Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import { ChatroomServiceService } from '../Service/chatroom-service.service';
 import { CoworkerService } from '../Service/coworker.service';
+import { UploadImagesComponent } from '../upload-images/upload-images.component';
 import { error } from 'console';
 
 
@@ -21,7 +22,7 @@ import { error } from 'console';
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [ChatComponent,CoworkersListComponent,CoworkerComponent,NavigationComponent,ChatRoomsListComponent,ChatGroupComponent,CommonModule,NgComponentOutlet,AsyncPipe],
+  imports: [UploadImagesComponent,ChatComponent,CoworkersListComponent,CoworkerComponent,NavigationComponent,ChatRoomsListComponent,ChatGroupComponent,CommonModule,NgComponentOutlet,AsyncPipe],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
@@ -30,7 +31,7 @@ export class MainComponent implements OnInit {
   msgList:string[]=["a","b"];
   socket = new SockJS('http://localhost:9000/messenger');
   stompClient=Stomp.over(this.socket);
-
+toggleEdit=false;
   ChatRoomSOrCoworkers:boolean=true;
   currentComponent:Component= new CoworkersListComponent;
 constructor(private sharedDataService:SharedDataService,private apiService:ApiService ,private chatroomService:ChatroomServiceService,private coworkerService:CoworkerService){
@@ -39,14 +40,22 @@ this.username=this.apiService.firstname +" "+this.apiService.lastname;
 }
 
   ngOnInit() {
-     
+    this.sharedDataService.toggleEdit.subscribe((data)=>{
+      this.toggleEdit=data;
+    })
+
+
   //test subscribing to a user
   this.stompClient.connect({token:this.apiService.accessToken},(): any=>{
+    //subscribing outside the block doesn't work
     console.log("connected now")
 this.apiService.stompClient=this.stompClient;
-
+  //subscrinbing to addedToRoom
+  this.apiService.subscribeToAddedToRoom();
+  //subscrinbing to removedFromRoom
+  this.apiService.subscribeRemovedFromRoom();
     this.apiService.subscribeToUser();
-    this.apiService.sendToUser({"receiverId":"khmoussiaouina@gmail.com"},"be carefull");
+  //  this.apiService.sendToUser({"receiverId":"khmoussiaouina@gmail.com"},"be carefull");
 
 
 
@@ -79,7 +88,8 @@ this.coworkerService.coworkerList.next(this.apiService.getCoworkers);
 
   }).catch((error)=>{
     console.log(error)})
-
+// subscribeToNewUser
+this.apiService.subscribeToNewUser();
 
   });
 
@@ -93,6 +103,9 @@ this.coworkerService.coworkerList.next(this.apiService.getCoworkers);
 
 
   });
+
 }
+
+
 
 }

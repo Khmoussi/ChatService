@@ -1,39 +1,116 @@
-#logoutBtn{
-  height: 75px;
-  width: 75px;
 
-}
 
-.nav{
+.nav {
   display: flex;
   flex-direction: column;
-  height: 100px;
-justify-content: space-between;
-width: 30em;}
-.items{
-  display:  flex;
-  flex-direction: row;
-
-}
-.item{
-  display: flex;
-  flex-direction: row;
-align-items: center;
-gap: 5px;
-}
-#mainImg{
-  height: 75px;
-  width: 75px;
-}
-#logoutImg1{
-border-radius: 100%;
-height: 55px;
-width: 55px;
-}
-.logout{
-  display: flex;
-align-items: center;
-justify-content: space-between;
-width: 180px;
+  overflow: auto;
+  justify-content: space-between;
+  background-color: #f8f8f8; /* Light background for contrast */
+  padding: 1em; /* Padding for inner spacing */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+.logo-logout{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1em; /* Space between elements */
+}
+
+.logo-logout h1 {
+  color: #333; /* Darker color for better readability */
+  font-size: 24px; /* Larger font size for heading */
+  margin: 0;
+}
+
+.logo-logout button {
+  padding: 0.5em 1em;
+  background-color: #4a90e2; /* Primary blue color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logo-logout button:hover {
+  background-color: #357ab8; /* Darker blue on hover */
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background-color: white;
+  padding: 0.5em;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search img {
+  width: 20px;
+  height: 20px;
+}
+
+.search input {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  font-size: 14px;
+  color: #333;
+}
+
+#logoutBtn {
+  height: 50px; /* Adjusted height */
+  width: 50px; /* Adjusted width */
+  background: url('/assets/icons/logout.svg') no-repeat center center; /* Placeholder for logout icon */
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+#logoutBtn:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.items {
+  display: flex;
+  flex-direction: row; /* Changed to column for vertical alignment */
+  gap: 1em; /* Space between items */
+  margin-top: 1em; /* Top margin for spacing */
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  background-color: #333;
+}
+
+.item:hover {
+  background-color: #e0e0e0; /* Light gray on hover */
+}
+
+.itemImg {
+  width: 30px;
+  height: 30px;
+}
+
+.item h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333; /* Darker color for better readability */
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 180px;
+}

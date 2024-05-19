@@ -8,14 +8,23 @@ export class Coworker {
   private lastname: string;
   private email: string;
   private messagesList?: OneMessageResponse[];
+  private photoUrl?: string;
 
-  constructor(firstname: string, lastname: string, email: string, messagesList?: OneMessageResponse[]) {
+
+  constructor(firstname: string, lastname: string, email: string, messagesList?: OneMessageResponse[],photoUrl?: string) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
     this.messagesList = messagesList;
-  }
+    this.photoUrl = photoUrl;
 
+  }
+  get PhotoUrl(): string|undefined {
+    return this.photoUrl;
+  }
+  set PhotoUrl(value: string) {
+    this.PhotoUrl = value;
+  }
   // Getter and Setter for 'firstname'
   get Firstname(): string {
     return this.firstname;

@@ -32,7 +32,7 @@ export class SignupComponent {
       this.apiService.signUp(new UserRequest(this.email,this.firstname, this.lastname,  this.password))
       .then(() => {
           console.log("Sign up successful!");
-          this.router.navigate(["main-component"]);
+          this.router.navigate(["login-component"]);
           // Handle success
       })
       .catch(error => {

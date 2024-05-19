@@ -11,6 +11,12 @@ export class CoworkerService {
   public currentCoworker$ = this.currentCoworker.asObservable();
   public coworkerList :BehaviorSubject<Coworker[]> = new BehaviorSubject<Coworker[]>([]);
   public coworkerList$=this.coworkerList.asObservable();
+  public clickedItemIndex :BehaviorSubject<number>=new BehaviorSubject<number>(0);
+public clickedItemIndex$=this.clickedItemIndex.asObservable();
   constructor() { }
-  
+  resetData() {
+    this.currentCoworker.next(null);
+    this.coworkerList.next([]);
+    this.clickedItemIndex.next(0);
+  }
 }

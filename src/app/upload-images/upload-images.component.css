@@ -1,0 +1,142 @@
+/* Base Styling */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* Toolbar and Input Field Styling */
+.toolbar-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+.upload-field {
+  margin: 20px auto;
+  width: 90%;
+}
+
+input[matInput] {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+button {
+  background-color: #007BFF;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button[disabled] {
+  background-color: #cccccc;
+}
+
+label[mat-stroked-button] {
+  padding: 8px 16px;
+  background-color: #5cb85c;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+label[mat-stroked-button]:hover {
+  background-color: #4cae4c;
+}
+
+/* Progress Bar Styling */
+.progress-container {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-top: 10px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.progress-bar {
+  width: 100%;
+}
+
+.progress-text {
+  float: right;
+  color: #555;
+}
+
+/* Image Preview Styling */
+.preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 10px;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.preview-image {
+  width: 100px; /* Medium thumbnail size */
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Message and Error Display */
+.message {
+  color: #d9534f;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #fff;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Card and List Styling */
+.list-card {
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.uploaded-image {
+  width: auto;
+  height: 50px; /* Smaller image size */
+  border-radius: 4px;
+}

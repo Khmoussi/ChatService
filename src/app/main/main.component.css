@@ -1,56 +1,81 @@
-#main{
-  /*background-color: black;*/
+#main {
   display: flex;
   flex-direction: row;
   width: 100%;
+  height: 100vh; /* Full viewport height */
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.25);
+  background-color: #f0f0f0; /* Light background for the main container */
+}
+
+.nav+list {
+  display: flex;
+  flex-direction: column;
+  width: 25%; /* Navigation and list take up 25% of the width */
+  background-color: #ffffff; /* White background for navigation and coworker list */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   height: 100%;
-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.25);
-
-
+  background-color: #f8f8f8; /* Light background for chat area */
+  padding: 20px; /* Padding for some breathing room */
 }
 
-
-.nav+list{
+app-navigation {
+  height: 30%; /* Adjusted height for better layout balance */
   display: flex;
-  flex-direction: column;
-
-
-}
-.chat{
-  display: flex;
-  flex-direction: column;
-flex: 1;
-height: 100%;
-
+  flex-direction: row;
+  justify-content: start;
+  padding: 20px; /* Padding for a balanced layout */
+  background-color: #ffffff; /* Consistent background color */
+  border-bottom: 1px solid #e0e0e0; /* Subtle border for separation */
 }
 
-app-navigation{
-  height: 30%;
-display: flex;
-flex-direction: row;
-justify-content: start;
-
-
+app-upload-images {
+  padding: 20px; /* Padding to align with other elements */
 }
+
 app-coworkers-list {
-  height: 70%;
-background-color: #F8F8F8;
-display: flex ;
-justify-content: start;
+  height: 80%; /* Adjusted height for better layout balance */
+  background-color: #f8f8f8; /* Consistent background color */
+  display: flex;
+  flex-direction: column; /* Column layout for coworker list */
+  overflow-y: auto; /* Scrollable if content overflows */
+  padding: 10px 20px; /* Padding for some breathing room */
 }
-app-chat-rooms-list{
-  background-color: #F8F8F8;
-  display: flex ;
-  justify-content: center;
-}
-app-chat {
-  margin-left: 50px;
-}
-app-chat-group{
-  margin-left: 50px;
 
+app-chat-rooms-list {
+  background-color: #f8f8f8; /* Consistent background color */
+  display: flex;
+  flex-direction: column; /* Column layout for chat rooms */
+  overflow-y: auto; /* Scrollable if content overflows */
+  padding: 10px 20px; /* Padding for some breathing room */
 }
-.username{
+
+app-chat {
+  flex: 1;
+  background-color: #ffffff; /* White background for chat area */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border-radius: 10px; /* Rounded corners for better aesthetics */
+  padding: 20px; /* Padding for a balanced layout */
+  margin: 20px; /* Margin to separate from the edges */
+}
+
+app-chat-group {
+  flex: 1;
+  background-color: #ffffff; /* White background for chat area */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border-radius: 10px; /* Rounded corners for better aesthetics */
+  padding: 20px; /* Padding for a balanced layout */
+  margin: 20px; /* Margin to separate from the edges */
+}
+
+.username {
   font-size: 20px;
-  margin-left:-50px ;
+  margin-left: -50px;
+  color: #333; /* Darker color for better readability */
+  font-weight: 700; /* Bold text for emphasis */
 }

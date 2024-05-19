@@ -32,14 +32,14 @@ export class SharedDataService {
 
   public testMessage :BehaviorSubject<string>=new BehaviorSubject<string>("");
 public testMessage$=this.testMessage.asObservable();
+  public toggleEdit :BehaviorSubject<boolean>=new BehaviorSubject<boolean>(false);
+public toggleEdit$=this.testMessage.asObservable();
 
   constructor( private apiService: ApiService ,private chatroomService: ChatroomServiceService) {
 
   this.currentChatroom= new BehaviorSubject(this.apiService.getChatrooms[0]);
   this.currentChatroom$=this.currentChatroom.asObservable();
-  this.chatroomList$.subscribe(chatroom =>{
-    this.chatroomList.next(chatroom);
-  })
+
   this.chatroomService.chatroomList.subscribe(chatRoom =>{
     this.chatroomList.next(chatRoom);
   })
@@ -78,6 +78,18 @@ updateMessageList(data:Message[]){
 }
 sendMessage(message:MessageResponse){
   this.currentChatroom.value.chatroomMessages.push(message);
+}
+ // Reset data function
+ resetData() {
+  this.behaviorSubject.next([]);
+  this.behaviorSubject3.next([]);
+  this.BehaviorSubject2.next(true); // or any default value as required
+  this.currentChatroom.next(this.apiService.getChatrooms[0]);
+  this.currentCoworker.next(this.apiService.getCoworkers[0]);
+  this.behaviorCurrentMessageList.next([]);
+  this.coworkerList.next([]);
+  this.chatroomList.next([]);
+  this.testMessage.next("");
 }
 }
 

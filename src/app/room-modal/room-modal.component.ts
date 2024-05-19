@@ -1,3 +1,5 @@
+import { Coworker } from './../Model/Coworker';
+import { SharedDataService } from './../Service/shared-data.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,7 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 export class RoomModalComponent {
   roomName:string="";
 
-  constructor(
+  constructor(private sharedDataService:SharedDataService,
     private apiService :ApiService,private chatRoomService :ChatroomServiceService, public dialogRef: MatDialogRef<RoomModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
@@ -30,11 +32,21 @@ export class RoomModalComponent {
   }
 
   onAddRoomClick(roomName: string): void {
-    let room=new ChatRoom(roomName,[],"",this.apiService.email);
 
-    this.apiService.createRoom(roomName).then(() => {
+
+    this.apiService.createRoom(roomName).then((room) => {
+      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa "+room)
+      let createdRoomId=this.apiService.createdRoom;
+      let list=this.chatRoomService.chatroomList.value;
+      if(createdRoomId!=""){
+    //  let room=new ChatRoom(roomName,[],createdRoomId,this.apiService.email,[]);
+
+    list.unshift(room);
+
       this.chatRoomService.currentChatroom.next(room);
-      this.chatRoomService.chatroomList.value.push(room);
+      this.chatRoomService.chatroomList.next(list);
+      this.apiService.subscribeTotopic(this.apiService.createdRoom)
+      }else{throw new Error("room wasn't created or id not retreived in front")}
     }).catch(()=>{
       console.log("room cannot be created")})
 

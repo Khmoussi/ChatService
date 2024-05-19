@@ -9,7 +9,7 @@ import { Message } from '../Model/Message';
 import { ChatRoom } from '../Model/ChatRoom';
 import SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
-import { BehaviorSubject, Observable, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, map, tap } from 'rxjs';
 import { LoginRequest } from '../Model/LoginRequest';
 import { error } from 'console';
 import axios from 'axios';
@@ -44,6 +44,8 @@ export class ApiService {
 public isLoggedOut$: Observable<boolean>;
 public sessionId :string =" aa";
 public response:string="";
+public createdRoom="";
+public subsMap = new Map();
 
 
 
@@ -52,7 +54,9 @@ public response:string="";
 
     this.isLoggedIn$=this.coworker$.pipe(map(coworker=>!!coworker))
     this.isLoggedOut$=this.isLoggedIn$.pipe(map(loggedIn=> !loggedIn))
-      this.getCoworkers = [
+    this.getCoworkers = [];
+    this.getChatrooms= [];
+    /*  this.getCoworkers = [
         new Coworker("user1", "aouina", "aouina@gmail.com", [
             new OneMessageResponse(1, new Date(), "sent", "hello brother", "aouina@gmail.com", "2aouina@gmail.com"),
             new OneMessageResponse(2, new Date(), "sent", "hello daniel", "2aouina@gmail.com", "aouina@gmail.com"),
@@ -85,6 +89,7 @@ public response:string="";
           new MessageResponse(2, new Date(), 'text', 'sender3', 2, 'Does anyone have any suggestions?')
       ], 'room2', 'admin2')
   ];
+  */
   }
   //hello
   hello(): void {
@@ -152,7 +157,7 @@ public response:string="";
 }
 
 
-  async login(loginRequest: LoginRequest): Promise<void> {
+  async login(loginRequest: LoginRequest): Promise<boolean> {
     try {
         const raw = JSON.stringify({
             "email": loginRequest.Email,
@@ -170,6 +175,7 @@ public response:string="";
         const response = await fetch("http://localhost:9000/api/v1/auth/login", requestOptions);
 
         if (!response.ok) {
+          return false;
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
@@ -179,9 +185,13 @@ public response:string="";
 
         console.log(result);
         // Process the result further if needed
+        return true;
+
     } catch (error) {
         console.error(error);
         // Handle errors, display error messages, etc.
+        return false;
+
     }
 }
 
@@ -204,9 +214,9 @@ public response:string="";
   }
 
   const result = await response.json();
-this.getCoworkers =result.map((result:any) => new Coworker(result.firstName,result.lastName,result.email,result.messages));
+this.getCoworkers =result.map((result:any) => new Coworker(result.firstName,result.lastName,result.email,result.messages,result.photoUrl));
 this.coworkerService.currentCoworker.next(this.getCoworkers[0]);
-console.log("fetched coworkers List " + this.getCoworkers[0].MessagesList);
+console.log("fetched coworkers List " + this.getCoworkers[0].PhotoUrl);
 
   }
 
@@ -228,13 +238,14 @@ if(!response.ok){
 
 }
 const result= await response.json();
-console.log("feteched chatrooms +" +result)
-this.getChatrooms=result;
-console.log("feteched wiw +" +this.getChatrooms)
+console.log("feteched chatrooms +" +result.chatroomMessages)
+
+this.getChatrooms=result.map((result:any) => new ChatRoom( result.roomName,result.chatroomMessages,result.id as string,result.admin,result.userResponses.map((result:any) =>new Coworker(result.firstName,result.lastName,result.email))));
+console.log("feteched wiw +" +this.getChatrooms[0].userResponses?.[0].Email)
 
 
 this.getChatrooms.forEach((room)=>{
-  console.log(room);
+  console.log(room._userResponses);
 })
 
   }
@@ -252,7 +263,7 @@ this.getChatrooms.forEach((room)=>{
 
 
 //creating new room
-async createRoom(roomName:string):Promise<void>{
+async createRoom(roomName:string):Promise<ChatRoom>{
 
   const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
@@ -275,8 +286,108 @@ if(!response.ok){
 }
 const result= await response.json();
 console.log("new room created " + result.id);
+let room=new ChatRoom(result.roomName,result.chatroomMessages,result.id,result.admin,result.userResponses);
+this.createdRoom=result.id as string
+return room;
+}
+
+//add user to chatroom
+async addCoworkerToChatroom(addedCoworker:string ,roomId :number):Promise<void>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", "Bearer "+this.accessToken);
+  myHeaders.append("Content-Type", "application/json");
+
+const raw = JSON.stringify({
+  "addedUserId": addedCoworker,
+  "chatRoomId": roomId
+});
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+};
+
+
+const response =await fetch("http://localhost:9000/chat/addUserToChatroom", requestOptions);
+if (!response.ok) {
+  console.log(response.text());
+
+  throw new Error(`HTTP error! Status: ${response.status}`);
+}
+
+const result = await response.text();
+console.log("added user response "+ result);
 
 }
+
+// remove user from chatroom
+async removeUserFromRoom(removedUserId:string,chatRoomId :string):Promise<void>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", "Bearer "+this.accessToken);
+
+  const raw = JSON.stringify({
+    "removedUserId": removedUserId,
+    "chatRoomId": Number.parseInt(chatRoomId)
+  });
+
+  const requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    body: raw
+  };
+
+  const response =await fetch("http://localhost:9000/chat/delete/removeUserFromRoom", requestOptions);
+  if(!response.ok){
+    console.log(response.text());
+
+  throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+  const result = await response.text();
+console.log("removed user response "+ result);
+
+
+}
+
+
+
+//uploading photo
+async upload(file: File): Promise<boolean> {
+try{
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", "Bearer "+this.accessToken);
+const formdata = new FormData();
+formdata.append("file", file);
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: formdata,
+};
+
+const response =await fetch("http://localhost:9000/file/", requestOptions)
+
+if(!response.ok){
+  throw new Error(`HTTP error! Status: ${response.status}`);
+
+}
+const result= await response.json();
+return result;
+}catch(error){
+  console.log(error);
+  return false;
+}
+
+}
+// getFiles
+getFiles(){
+
+}
+//
+
 
 
 
@@ -319,6 +430,7 @@ sendToUser(headers:any,message:string):any{
     {
 
   this.stompClient.send("/app/chat",headers,message);
+  console.log("send to user called");
 
   let m=new OneMessageResponse(0,new Date(),null,message,this.email!,this.coworkerService.currentCoworker.value?.Email!);
   let list=this.coworkerService.coworkerList.value;
@@ -337,24 +449,59 @@ sendToUser(headers:any,message:string):any{
 }
 public subscribeTotopic(topic:string):void{
   if(this.stompClient.connected){
- this.stompClient.subscribe("/topic/"+topic,((message: Stomp.Message) => {
+ let subscription=this.stompClient.subscribe("/topic/"+topic,((message: Stomp.Message) => {
  let m=JSON.parse(message.body);
  console.log("receive Message"+" " +m.content );
- let msg=new MessageResponse(0,new Date(),m.senderId,m.messageType,m.sendDate,m.content);
+
+ let msg=new MessageResponse(0,new Date(),m.messageType,m.senderId,m.sendDate,m.content);
+ console.log(" Message Type1"+" " +msg.messageType );
+
+ if(msg.messageType=="join"){
+  console.log(" Message Type2"+" " +m.messageType );
+
+let room=this.chatroomService.currentChatroom.value;
+if(room){
+room.userResponses.push(new Coworker(m.userResponse.firstName,m.userResponse.lastName,m.userResponse.email));
+room._userResponses.forEach((coworker:Coworker)=>{
+console.log("new room coworker "+coworker.Email);
+})
+this.chatroomService.currentChatroom.next(room);
+}
+
+}
+if(msg.messageType=="Leave"){
+  console.log(" Message Type2"+" " +m.messageType );
+
+let room=this.chatroomService.currentChatroom.value;
+if(room){
+  let removed=new Coworker(m.userResponse.firstName,m.userResponse.lastName,m.userResponse.email)
+  room.userResponses=room.userResponses.filter(coworker =>coworker.Email!==removed.Email);
+room.userResponses.forEach((coworker:Coworker)=>{
+console.log("removed from  room coworker "+coworker.Email +"       "+removed.Email);
+})
+this.chatroomService.currentChatroom.next(room);
+}
+
+}
 let list=this.chatroomService.chatroomList.value;
 console.log("list list "+list.length)
-list.forEach(chatroom=>{
+list.forEach((chatroom,index)=>{
   console.log("comaprison "+chatroom.id +" "+(m.roomId as string))
 
   if(chatroom.id== (m.roomId as string))
     {
       chatroom.chatroomMessages.push(msg);
+      list.splice(index,1);
+      list.unshift(chatroom);
       this.chatroomService.chatroomList.next(list);
     }
 })
 
 }
  ))
+
+ this.subsMap.set(topic,subscription);
+
 }
 }
 public subscribeToUser(){
@@ -362,16 +509,72 @@ this.stompClient.subscribe("/user/queue/hello",((message: Stomp.Message) => {
   let list=this.coworkerService.coworkerList.value;
   console.log("list list "+list.length)
   let m=JSON.parse(message.body);
-  list.forEach(coworker=>{
+  list.forEach((coworker,index)=>{
     if((coworker.Email=== m.senderId ) )
       {
         coworker.MessagesList?.push(m);
+        list.splice(index,1);
+        list.unshift(coworker);
+
         this.coworkerService.coworkerList.next(list);
+
       }
   })
 }));
 }
+public subscribeToNewUser():void{
+  this.stompClient.subscribe("/topic/NewUser",(message:Stomp.Message)=>{
+    let m=JSON.parse(message.body);
+let list=this.coworkerService.coworkerList.value;
+let addedUser=new Coworker(m.firstName,m.lastName,m.email,m.messages,m.photoUrl);
+list.push(addedUser);
+console.log("added user " +addedUser);
+this.coworkerService.coworkerList.next(list);
+  });
+}
+public subscribeToAddedToRoom():void{
+  this.stompClient.subscribe("/user/queue/addUserToRoom",((message: Stomp.Message) => {
 
+    let m=JSON.parse(message.body) as ChatRoom;
+   let list= this.chatroomService.chatroomList.value;
+   list.push(m);
+   this.chatroomService.chatroomList.next(list);
+    this.subscribeTotopic(m.id as string);
+    if(list.length==1){
+      this.chatroomService.currentChatroom.next(list[0]);
 
+    }
+
+  }));}
+
+  public subscribeRemovedFromRoom():void{
+    this.stompClient.subscribe("/user/queue/removedUserFromRoom",((message: Stomp.Message) => {
+
+      let roomId=JSON.parse(message.body) ;
+      roomId=roomId as string;
+     let list= this.chatroomService.chatroomList.value;
+     list = list.filter(room => room.id !== roomId);
+
+     this.chatroomService.chatroomList.next(list);
+
+      console.log("removed From  room "+roomId);
+//unsubscribe
+console.log("unsubscribe "+this.subsMap.get(roomId));
+this.subsMap.get(roomId).unsubscribe();
+this.subsMap.delete(roomId);
+
+if(this.chatroomService.currentChatroom.value?.id==roomId)
+  this.chatroomService.currentChatroom.next(this.chatroomService.chatroomList.value[0]);
+    }));}
+    resetData() {
+      this.accessToken = undefined;
+      this.firstname = undefined;
+      this.lastname = undefined;
+      this.email = undefined;
+      this.getCoworkers = [];
+      this.getChatrooms = [];
+      this.coworkerSubj.next(null);
+
+    }
 
 }

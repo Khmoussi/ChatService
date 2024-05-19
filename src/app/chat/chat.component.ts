@@ -19,13 +19,14 @@ export class ChatComponent implements OnInit{
   messageList: OneMessageResponse[]=[];
   currentCoworker:Coworker|null=null;
     message:string="";
+    userEmail:string="";
   constructor(private sharedDataService : SharedDataService,private coockieService:CookieService,private apiService:ApiService,private coworkerService:CoworkerService){
 
 
 
   }
   ngOnInit() {
-
+this.userEmail=this.apiService.email!;
     // Subscribe to changes in the shared data
 
     this.sharedDataService.currentCoworker$.subscribe(data => {
@@ -47,6 +48,7 @@ export class ChatComponent implements OnInit{
   sendMessage(){
 
     this.apiService.sendToUser({"receiverId":this.currentCoworker?.Email},this.message);
+    this.message="";
 
   }
 

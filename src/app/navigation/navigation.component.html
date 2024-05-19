@@ -1,13 +1,14 @@
 <div>
 <div class="nav">
-  <div class="logo+logout">
+  <div class=".logo-logout">
     <h1>Chats</h1>
+    <button (click)="showEdit()">Edit</button>
   <div class="search">
   <img src="/assets/icons/messagesearch.svg" alt="messagesearch">
   <input type="text" placeholder="search a chatroom"/>
 
   </div>
-<!--<button id="logoutBtn" (click)="logout()"> </button>-->
+<button id="logoutBtn" (click)="logout()"> </button>
 </div>
 <div class="items">
   <div class="item" (click)="navigateToCoworkerList()">

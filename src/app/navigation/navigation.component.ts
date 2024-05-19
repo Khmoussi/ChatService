@@ -10,6 +10,7 @@ import { ChatRoom } from '../Model/ChatRoom';
 import { ChatroomServiceService } from '../Service/chatroom-service.service';
 import { RoomModalComponent } from '../room-modal/room-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CoworkerService } from '../Service/coworker.service';
 
 @Component({
   selector: 'app-navigation',
@@ -20,7 +21,8 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class NavigationComponent {
 
-  constructor(public dialog: MatDialog,private sharedDataService :SharedDataService,private signService :SignService,private router:Router , private apiService :ApiService,private chatRoomService :ChatroomServiceService){
+
+  constructor(public dialog: MatDialog,private sharedDataService :SharedDataService,private signService :SignService,private router:Router , private apiService :ApiService,private chatRoomService :ChatroomServiceService,private coworkerService:CoworkerService){
 
   }
 
@@ -33,7 +35,10 @@ navigateToCoworkerList():void{
   }
   logout():void{
     //this.signService.signOut();
-    this.apiService.logout();
+    this.apiService.resetData();
+    this.chatRoomService.resetData();
+    this.sharedDataService.resetData();
+    this.coworkerService.resetData();
     this.router.navigate(['login-component']);
   }
   createRoom() {
@@ -54,5 +59,8 @@ navigateToCoworkerList():void{
         console.log('Room added:', roomName);
       }
     });
+  }
+  showEdit() {
+this.sharedDataService.toggleEdit.next(!this.sharedDataService.toggleEdit.value);
   }
 }

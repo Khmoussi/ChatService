@@ -1,96 +1,135 @@
-
 :host {
   flex: 1; /* Fill parent's width */
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content:end;
+  justify-content: end;
+  background-color: #f8f8f8; /* Light background for the chat area */
 }
-.top{
-  /*width: 400px;*/
+
+.top {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding: 1em;
+  background-color: #ffffff; /* White background for the header */
+  border-bottom: 1px solid #e0e0e0; /* Subtle border for separation */
 }
-.bot{
-  margin-top: 180px;
-  height: 40px;
-  background-color: #E2E2E2;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.right_bot{
-display: flex;
-flex-direction: row;
-flex: 1;
 
-}
-#texting{
-  width: 100%;
-}
-.left_bot{
-  background-color: #aaa3a3;
+.top .coworker {
   display: flex;
   flex-direction: row;
-gap: 20px;}
+  align-items: center;
+  gap: 1em; /* Space between image and text */
+}
+
+.top .coworker img {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  border: 2px solid #4a90e2; /* Border around image */
+}
+
+.top .coworker h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #333; /* Darker color for better readability */
+}
+
+.topIcons {
+  display: flex;
+  flex-direction: row;
+  gap: 1em; /* Space between icons */
+}
+
+.topIcons img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.topIcons img:hover {
+  transform: scale(1.1); /* Enlarge on hover */
+}
+
 .mid{
   height: 500px;
   overflow: auto;
 }
-.topIcons{
-  margin-right: 30px;
+
+.mid .div-sent-message {
   display: flex;
-  flex-direction: row;
- width: 130px;
- justify-content: space-between;
-
-
-}
-.coworker{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 18px;
-}
-
-input{
-  border-radius: 30px;
-  background: #E2E2E2;
-  width: 170px;
-  outline: none;
-border: none;
-  color: rgba(33, 33, 33, 0.85);
-
-font-family: Open Sans;
-font-size: 12px;
-padding-left: 5px;
-
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-}
-.coworker img{
-  height: 55px;
-  width: 55px;
-border-radius: 100%;
-
-}
-img{
-  width: 25px;
-height: 25px;
-
-}
-
-.sent-message {
- display: inline-block;
-  background-color: blue;
-
-}
-.div-sent-message{
-  display: flex;
-  flex-direction: row;
-
   justify-content: flex-end;
+  margin-bottom: 1em; /* Space between messages */
+}
+
+.mid .sent-message {
+  display: inline-block;
+  padding: 0.75em 1em;
+  border-radius: 12px;
+  background-color: #e1f5fe; /* Light blue background for received messages */
+  color: #333; /* Dark text for better readability */
+  max-width: 60%;
+}
+
+.mid .sent-message-reply {
+  background-color: #4a90e2; /* Blue background for sent messages */
+  color: #fff; /* White text for sent messages */
+  align-self: flex-end;
+}
+
+.bot {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  background-color: #f1f1f1; /* Light gray background for input area */
+  border-top: 1px solid #e0e0e0; /* Subtle border for separation */
+}
+
+.left_bot {
+  display: flex;
+  flex-direction: row;
+  gap: 1em; /* Space between icons */
+}
+
+.left_bot img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.left_bot img:hover {
+  transform: scale(1.1); /* Enlarge on hover */
+}
+
+.right_bot {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 1em; /* Space between input and icon */
+}
+
+.right_bot input {
+  flex: 1;
+  padding: 0.75em 1em;
+  border-radius: 20px;
+  background-color: #ffffff; /* White background for input */
+  border: 1px solid #e0e0e0; /* Border for input */
+  outline: none;
+  font-size: 14px;
+  color: #333; /* Dark text for better readability */
+}
+
+.right_bot img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.right_bot img:hover {
+  transform: scale(1.1); /* Enlarge on hover */
 }

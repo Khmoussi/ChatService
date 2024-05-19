@@ -1,3 +1,4 @@
+import { Coworker } from './Coworker';
 import { MessageResponse } from './MessageResponse';
 
 export class ChatRoom {
@@ -5,22 +6,31 @@ export class ChatRoom {
   private _id?: string; // Renamed property to avoid conflict
   private _admin?: string; // Renamed property to avoid conflict
   public chatroomMessages: MessageResponse[];
+  public userResponses:Coworker[];
 
   constructor(
     name: string,
     messageList: MessageResponse[] = [],
     roomId?: string,
-    adminId?: string
+    adminId?: string,
+    userResponses:Coworker[]=[]
   ) {
     this._roomName = name;
     this.chatroomMessages = messageList;
     this._id = roomId; // Assign to renamed property
     this._admin = adminId; // Assign to renamed property
+    this.userResponses=userResponses;
   }
 
   // Getter and Setter for 'roomName'
   get roomName(): string {
     return this._roomName;
+  }
+  get _userResponses(){
+    return this.userResponses;
+  }
+  set _userResponses(value:Coworker[]){
+    this.userResponses=value;
   }
 
   set roomName(value: string) {

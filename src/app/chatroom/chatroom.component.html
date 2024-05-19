@@ -1,7 +1,7 @@
 
 <div  class="coworker" *ngFor="let item of chatRoomsList; let i =index"
  (click)="selectChatroom(i)"
-  [ngStyle]="{'background-color': (  i==clickedItemIndex) ? 'blue' : '#F8F8F8'}">
+  [ngStyle]="{'background-color': (  item.id==currentChatroom?.id) ? 'blue' : '#F8F8F8'}">
 <img src="assets/icons/coworker.jpg"alt="Your Image"/>
   <div>
     <div class="txt">

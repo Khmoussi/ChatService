@@ -20,8 +20,8 @@ import * as Stomp from 'stompjs';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  email:string="khmoussiaouina@gmail.com";
-  password:string="pass123";
+  email:string="";
+  password:string="";
   socket = new SockJS('http://localhost:9000/messenger');
   stompClient=Stomp.over(this.socket);
   constructor(private apiService: ApiService,private signService: SignService ,private router:Router){
@@ -31,16 +31,16 @@ export class LoginComponent {
 
 
 
-
+    this.verifyLogin();
 
 
 }
    async verifyLogin(){
 
-      await this.apiService.login(new LoginRequest(this.email, this.password))  .then(() => {
+      await this.apiService.login(new LoginRequest("khmoussiaouina@gmail.com", "123"))  .then((result) => {
         console.log("Login  successful!");
 
-
+if(result)
         this.router.navigate(["main-component"]);
         // Handle success
     })
