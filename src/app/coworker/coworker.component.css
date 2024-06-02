@@ -25,7 +25,7 @@
   width: 45px;
   border-radius: 50%;
   margin-right: 10px;
-  border: 2px solid #FFD700; /* Gold border around image */
+  border: 2px solid #7300ff; /* Gold border around image */
 }
 
 .text-container {
@@ -34,7 +34,7 @@
 }
 
 .text-container h3 {
-  color: #333; /* Darker text for better readability */
+  color: #ffffff; /* Darker text for better readability */
   font-family: 'Open Sans', sans-serif;
   font-size: 14px; /* Slightly larger font size */
   font-weight: 700;
@@ -42,7 +42,7 @@
 }
 
 .text-container p {
-  color: #666; /* Medium gray for secondary text */
+  color: #ffffff; /* Medium gray for secondary text */
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 400;
@@ -53,7 +53,7 @@
 }
 
 .time {
-  color: #999;
+  color: #ffffff;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   white-space: nowrap;

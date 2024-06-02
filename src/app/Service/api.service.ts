@@ -38,6 +38,8 @@ export class ApiService {
  public getCoworkers:Coworker[];
  getChatrooms:ChatRoom[];
  // loggedin user
+public user:Coworker|null =null;
+
  public coworkerSubj:BehaviorSubject<Coworker|null>=new BehaviorSubject<Coworker |null>(null);
  public coworker$=this.coworkerSubj.asObservable();
  public isLoggedIn$: Observable<boolean>;
@@ -181,6 +183,7 @@ public subsMap = new Map();
 
         const result = await response.json();
         this.accessToken=result.accessToken;
+        this.user= new Coworker(result.firstname,result.lastname,result.email,undefined,result.photoUrl);
         this.email=loginRequest.Email;
 
         console.log(result);
@@ -240,7 +243,7 @@ if(!response.ok){
 const result= await response.json();
 console.log("feteched chatrooms +" +result.chatroomMessages)
 
-this.getChatrooms=result.map((result:any) => new ChatRoom( result.roomName,result.chatroomMessages,result.id as string,result.admin,result.userResponses.map((result:any) =>new Coworker(result.firstName,result.lastName,result.email))));
+this.getChatrooms=result.map((result:any) => new ChatRoom( result.roomName,result.chatroomMessages,result.id as string,result.admin,result.userResponses.map((result:any) =>new Coworker(result.firstName,result.lastName,result.email,undefined,result.photoName))));
 console.log("feteched wiw +" +this.getChatrooms[0].userResponses?.[0].Email)
 
 
@@ -352,6 +355,31 @@ console.log("removed user response "+ result);
 
 }
 
+//remove room
+async removeRoom(roomId:number):Promise<boolean>{
+
+  const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", "Bearer "+this.accessToken);
+
+const raw = JSON.stringify({
+  "roomId": roomId
+});
+
+const requestOptions = {
+  method: "DELETE",
+  headers: myHeaders,
+  body: raw
+};
+
+const response =await fetch("http://localhost:9000/chat/delete/room", requestOptions);
+if(!response.ok){
+  throw new Error(`HTTP error! Status: ${response.status}`);
+}
+return true;
+
+}
+
 
 
 //uploading photo
@@ -435,13 +463,14 @@ sendToUser(headers:any,message:string):any{
   let m=new OneMessageResponse(0,new Date(),null,message,this.email!,this.coworkerService.currentCoworker.value?.Email!);
   let list=this.coworkerService.coworkerList.value;
   console.log("list list "+list.length)
+  if(headers.receiverId!=this.email){
   list.forEach(coworker=>{
     if((coworker.Email=== headers.receiverId ) )
       {
         coworker.MessagesList?.push(m);
         this.coworkerService.coworkerList.next(list);
       }
-  })
+  })}
 
     }else
   console.log("can send because not connected");
@@ -453,7 +482,25 @@ public subscribeTotopic(topic:string):void{
  let m=JSON.parse(message.body);
  console.log("receive Message"+" " +m.content );
 
- let msg=new MessageResponse(0,new Date(),m.messageType,m.senderId,m.sendDate,m.content);
+
+ let msg=new MessageResponse(0,m.sendDate,m.messageType,m.senderId,m.roomId,m.content);
+ //directly delete the deleted room
+ if(msg.messageType=="deleted"){
+  //unsubscribe
+let subscription=this.subsMap.get(msg.roomId);
+subscription.unsubscribe();
+let roomId=msg.roomId.toString();
+this.subsMap.delete(roomId);
+
+  let list=this.chatroomService.chatroomList.value;
+const index =list.findIndex((chatRoom) => parseFloat(chatRoom.id!) == msg.roomId );
+console.log("roome name to delete :"+list[index].roomName);
+list.splice(index,1);
+this.chatroomService.chatroomList.next(list);
+if(parseFloat(this.chatroomService.currentChatroom.value?.id!)=== msg.roomId){
+  this.chatroomService.currentChatroom.next(list[0]);
+}
+ }
  console.log(" Message Type1"+" " +msg.messageType );
 
  if(msg.messageType=="join"){

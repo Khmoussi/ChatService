@@ -1,7 +1,7 @@
 <div id="main">
-  <div class="nav-list">
+  <div class="list">
+
 <app-navigation></app-navigation>
-<app-upload-images *ngIf="toggleEdit"></app-upload-images>
 <app-coworkers-list *ngIf="ChatRoomSOrCoworkers; else chatGroup"></app-coworkers-list>
 <ng-template #chatGroup>
   <app-chat-rooms-list></app-chat-rooms-list>
@@ -9,11 +9,15 @@
 
 </div>
 <div class="chat">
-
+<div class="custom">
 <app-chat id="childChat" *ngIf="ChatRoomSOrCoworkers; else other"></app-chat>
 <ng-template #other>
   <app-chat-group></app-chat-group>
 </ng-template>
 </div>
+</div>
+<div class="edit">
+  <app-upload-images ></app-upload-images>
 
+</div>
 </div>

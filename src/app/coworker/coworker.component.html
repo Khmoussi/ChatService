@@ -1,6 +1,6 @@
 <div class="coworker" *ngFor="let item of coworkerList; let i = index"
  (click)="bringMessages(i)"
-  [ngStyle]="{'background-color': (item.Email == currentCoworker?.Email) ? 'red' : '#F8F8F8'}">
+  [ngStyle]="{'background-color': (item.Email == currentCoworker?.Email) ? '#3596ff' : '#007aff'}">
   <img src="assets/usersIcons/{{item.PhotoUrl}}" alt="Your Image" />
   <div class="text-container">
     <h3>{{item.Firstname}} {{item.Lastname}}</h3>

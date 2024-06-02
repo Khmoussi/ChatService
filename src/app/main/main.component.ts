@@ -16,13 +16,14 @@ import { ChatroomServiceService } from '../Service/chatroom-service.service';
 import { CoworkerService } from '../Service/coworker.service';
 import { UploadImagesComponent } from '../upload-images/upload-images.component';
 import { error } from 'console';
+import { ProfileComponent } from '../profile/profile.component';
 
 
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [UploadImagesComponent,ChatComponent,CoworkersListComponent,CoworkerComponent,NavigationComponent,ChatRoomsListComponent,ChatGroupComponent,CommonModule,NgComponentOutlet,AsyncPipe],
+  imports: [ProfileComponent,UploadImagesComponent,ChatComponent,CoworkersListComponent,CoworkerComponent,NavigationComponent,ChatRoomsListComponent,ChatGroupComponent,CommonModule,NgComponentOutlet,AsyncPipe],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })

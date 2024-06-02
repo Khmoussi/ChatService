@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
@@ -22,7 +22,10 @@ import { ChatRoom } from '../Model/ChatRoom';
   styleUrls: ['./chat-group.component.css']
 })
 export class ChatGroupComponent implements OnInit {
-  userId: number | undefined;
+
+extraButtonToggled: boolean = false;
+
+  userId: string | undefined;
   messageList: MessageResponse[] = [];
   message: string = "";
   currentChatRoom: ChatRoom | null = null;
@@ -40,10 +43,7 @@ export class ChatGroupComponent implements OnInit {
     private chatroomService: ChatroomServiceService,
     private coworkerService: CoworkerService
   ) {
-    const username = this.cookieService.get("username");
-    if (username) {
-      this.userId = parseInt(username.split(',')[2]);
-    }
+    this.userId = this.apiService.email;
   }
 
   ngOnInit() {
@@ -75,6 +75,7 @@ export class ChatGroupComponent implements OnInit {
     this.currentCoworker = this.apiService.coworkerSubj.value;
     this.currentUserEmail = this.apiService.email!;
     console.log("Current user: " + this.currentUserEmail);
+    console.log("Current coworker photo: " + this.currentChatRoom.userResponses[0].PhotoUrl);
   }
 
   addUser() {
@@ -149,4 +150,39 @@ export class ChatGroupComponent implements OnInit {
     }
     return true;
   }
+
+  toggleExtra() {
+this.extraButtonToggled= !this.extraButtonToggled;  }
+@HostListener('document:click', ['$event'])
+onDocumentClick(): void {
+  this.extraButtonToggled = false;
+  this.showList=false;
+  this.showRoomUsers=false;
+}
+
+deleteRoom() {
+  console.log("length before deleting "+this.sharedDataService.chatroomList.value.length);
+
+  console.log("chatroom to delete "+this.currentChatRoom?.id)
+  if(this.currentChatRoom?.id !=null )
+this.apiService.removeRoom( parseFloat( this.currentChatRoom.id )).then(() => {
+console.log("room deleted");
+/*
+let list=this.sharedDataService.chatroomList.value;
+const index =list.findIndex((chatRoom) => chatRoom.id == this.currentChatRoom?.id);
+console.log("roome name todelet :"+list[index].roomName);
+console.log("length after deleting "+list.length);
+
+list=list.splice(index,1);
+console.log("length after deleting2 "+list.length);
+this.sharedDataService.chatroomList.next(list);
+this.sharedDataService.currentChatroom.next(list[0]);
+*/
+})
+.catch((error) => {
+  console.log(error);
+});
+
+}
+
 }

@@ -1,26 +1,10 @@
-<div *ngFor="let progressInfo of progressInfos" class="progress-container">
-  <span>{{ progressInfo.fileName }}</span>
-  <mat-toolbar class="progress-bar">
-    <mat-progress-bar
-      color="accent"
-      [value]="progressInfo.value"
-    ></mat-progress-bar>
-    <span class="progress-text">{{ progressInfo.value }}%</span>
-  </mat-toolbar>
-</div>
 
-<mat-form-field class="upload-field">
-  <div class="toolbar-container">
-    <mat-toolbar>
-      <input matInput [value]="selectedFileNames.length ? selectedFileNames.join(', ') : 'Select Images'" readonly>
 
-      <button
-        mat-flat-button
-        color="primary"
-        [disabled]="!selectedFiles"
-        (click)="uploadFiles()"
-      >Upload</button>
-    </mat-toolbar>
+
+
+<div class="uploadField" >
+
+
 
     <input
       type="file"
@@ -30,31 +14,34 @@
       multiple
       (change)="selectFiles($event)"
       hidden
-    />
-    <label for="fileInput" mat-stroked-button>Choose Files</label>
+    >
+    <div class="logologout">
+
+    <label for="fileInput"><img (click)="showEdit()"
+    src="assets/usersIcons/{{user?.PhotoUrl}}" alt="Your Image" />
+    </label>
+    <h3>{{user?.Firstname +" "+user?.Lastname}}</h3>
+
+    </div>
+
+  <div [hidden]="toggleToolBar">
+    <input [hidden]="true" matInput [value]="selectedFileNames.length ? selectedFileNames.join(', ') : 'Select Images'" readonly>
+<div class="btns">
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="!selectedFiles"
+      (click)="uploadFiles()"
+    >Upload</button>
+    <button (click)="toggleToolBar=true"> Cancel </button>
   </div>
-</mat-form-field>
+  </div>
+<div id="logoutBtnDiv">
+      <button id="logoutBtn" (click)="logout()">Logout </button>
 
-<div class="preview-container">
-  <img *ngFor="let preview of previews" [src]="preview" class="preview-image">
+    </div>
 </div>
 
-<div *ngIf="message.length" class="message">
-  <ul>
-    <li *ngFor="let msg of message; let i = index">{{ msg }}</li>
-  </ul>
-</div>
 
-<mat-card class="list-card">
-  <mat-card-header>
-    <mat-card-title>List of Images</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <mat-list role="list">
-      <mat-list-item role="listitem" *ngFor="let image of imageInfos | async" class="list-item">
-        <a matLine href="{{ image.url }}">{{ image.name }}</a>
-        <img src="{{ image.url }}" alt="{{ image.name }}" class="uploaded-image"/>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-</mat-card>
+
+

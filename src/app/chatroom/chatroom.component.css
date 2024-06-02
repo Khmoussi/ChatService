@@ -1,37 +1,81 @@
-.coworker{
-  display: flex ;
-  flex-direction: row;
+.coworker {
+  display: flex;
   align-items: center;
-border-radius: 100em;
-width: 300px;
-height: 55px;
-justify-content: flex-start;
-gap: 10px;
-margin-bottom: 28px;
-
+  border-radius: 12px;
+  padding: 10px;
+  justify-content: space-between;
+  background-color: #F8F8F8; /* Light gray background */
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  margin-bottom: 10px;
+  width: 1;
 }
 
-h3{
-  color: #000;
-
-font-family: Open Sans;
-font-size: 16px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-margin-bottom: -5px;
+.coworker:hover {
+  background-color: #E0E0E0; /* Slightly darker gray for hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
 }
-p{
-  color: #696969;
 
-font-family: Open Sans;
-font-size: 11px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+.coworker[ngStyle] {
+  background-color: #E5E7FF !important; /* Soft blue for selected item */
 }
-img{
-  height: 55px;
-  width: 55px;
-  border-radius: 100%;
+
+
+
+.text-container {
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.text-container h3 {
+  color: #ffffff; /* Darker text for better readability */
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px; /* Slightly larger font size */
+  font-weight: 700;
+  margin: 0;
+}
+
+.text-container p {
+  color: #ffffff; /* Medium gray for secondary text */
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  margin: 4px 0 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.time {
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  white-space: nowrap;
+}
+ .img1  {
+  position: absolute;
+  height: 50%;
+  width: 50%;
+  border-radius: 50%;
+  border: 2px solid #4a90e2;
+}
+.img2  {
+  position: absolute;
+  height: 50%;
+  width: 50%;
+  border-radius: 50%;
+  border: 2px solid #4a90e2;
+}
+
+ .img1 {
+  margin-top: 35%;
+  margin-left: 35%;
+}
+
+.roomPicture {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  border: 2px solid #4a90e2;
+  position: relative;
 }

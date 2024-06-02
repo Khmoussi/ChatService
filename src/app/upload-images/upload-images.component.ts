@@ -11,6 +11,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { ApiService } from '../Service/api.service';
+import { Coworker } from '../Model/Coworker';
+import { ChatroomServiceService } from '../Service/chatroom-service.service';
+import { SharedDataService } from './../Service/shared-data.service';
+import { SignService } from '../Service/sign.service';
+import { CoworkerService } from '../Service/coworker.service';
+import { Router } from '@angular/router';
+
+import { ToastrService } from 'ngx-toastr';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-upload-images',
@@ -26,11 +35,14 @@ import { ApiService } from '../Service/api.service';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatListModule
+    MatListModule,
+
   ],
   providers: [FileUploadService]
 })
 export class UploadImagesComponent implements OnInit {
+  user :Coworker| null=null;
+
   selectedFiles?: FileList;
   selectedFileNames: string[] = [];
 
@@ -39,11 +51,12 @@ export class UploadImagesComponent implements OnInit {
 
   previews: string[] = [];
   imageInfos?: Observable<any>;
-
-  constructor(private uploadService: FileUploadService ,private apiService :ApiService) {}
-
+toggleToolBar: boolean = true;
+  constructor(private snackBar: MatSnackBar,private toastr: ToastrService,private router:Router,private uploadService : FileUploadService,private sharedDataService :SharedDataService,private signService :SignService, private apiService :ApiService,private chatRoomService :ChatroomServiceService,private coworkerService:CoworkerService) {
+  }
   ngOnInit(): void {
     this.imageInfos = this.uploadService.getFiles();
+    this.user=this.apiService.user;
   }
 
   selectFiles(event: any): void {
@@ -68,6 +81,8 @@ export class UploadImagesComponent implements OnInit {
         this.selectedFileNames.push(this.selectedFiles[i].name);
       }
     }
+
+
   }
 
   upload(idx: number, file: File): void {
@@ -75,15 +90,17 @@ export class UploadImagesComponent implements OnInit {
 
     if (file) {
       this.apiService.upload(file).then(
-        (event: any) => {
-
+        (result: any) => {
+          if(result)
+this.showSuccess("upload success")
+   else{this.showError("upload failed")}
             const msg = 'Uploaded the file successfully: ' + file.name;
             this.message.push(msg);
            // this.imageInfos = this.apiService.getFiles();
 
-        }).catch((error)=>{console.log(error)})
-
-      ;
+        }).catch((error)=>{
+          this.showError("upload failed")
+          console.log(error)});
     }
   }
 
@@ -95,5 +112,34 @@ export class UploadImagesComponent implements OnInit {
         this.upload(i, this.selectedFiles[i]);
       }
     }
+  }
+
+  logout():void{
+    //this.signService.signOut();
+    this.apiService.resetData();
+    this.chatRoomService.resetData();
+    this.sharedDataService.resetData();
+    this.coworkerService.resetData();
+    this.router.navigate(['login-component']);
+  }
+  showEdit() {
+   this.toggleToolBar=false;
+  }
+ showSuccess(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000, // duration in milliseconds
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar']
+    });
+  }
+
+  showError(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: ['error-snackbar']
+    });
   }
 }

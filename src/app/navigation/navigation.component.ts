@@ -33,14 +33,7 @@ this.sharedDataService.updateChatRoomSOrCoworkers(false)
 navigateToCoworkerList():void{
   this.sharedDataService.updateChatRoomSOrCoworkers(true)
   }
-  logout():void{
-    //this.signService.signOut();
-    this.apiService.resetData();
-    this.chatRoomService.resetData();
-    this.sharedDataService.resetData();
-    this.coworkerService.resetData();
-    this.router.navigate(['login-component']);
-  }
+
   createRoom() {
 
 
@@ -60,7 +53,7 @@ navigateToCoworkerList():void{
       }
     });
   }
-  showEdit() {
-this.sharedDataService.toggleEdit.next(!this.sharedDataService.toggleEdit.value);
-  }
+
+
+
 }

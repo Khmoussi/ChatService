@@ -1,8 +1,8 @@
-<div class="chat">
+<div class="chat" *ngIf="currentChatRoom">
   <div class="top">
 
 <!-- List -->
-<div class="list-container" *ngIf="showList" (click)="closeList()">
+<div class="listcontainer" *ngIf="showList" (click)="closeList()">
   <mat-list class="custom-list">
     <mat-list-item *ngFor="let coworker of usersNotInCurrentRoom" class="custom-list-item" (click)="itemClicked(coworker)">
       <mat-icon mat-list-avatar class="custom-avatar">person</mat-icon>
@@ -17,7 +17,7 @@
 
 
 <!-- List -->
-<div class="list-container" *ngIf="showRoomUsers" (click)="closeRoomUsersList()">
+<div class="listcontainer" *ngIf="showRoomUsers" (click)="closeRoomUsersList()">
   <mat-list class="custom-list">
     <ng-container *ngFor="let coworker of currentChatRoom?._userResponses">
       <ng-container *ngIf="coworker.Email !== this.currentUserEmail">
@@ -36,25 +36,34 @@
 
 
   <div class="coworker">
-    <img src="assets/icons/coworker.jpg"alt=" Image"/>
+    <div class="roomPicture">
+    <img class="img1" src="assets/usersIcons/{{currentChatRoom._userResponses[0].PhotoUrl}}"alt=" Image"/>
+    <img *ngIf="currentChatRoom._userResponses.length>1" class="img2" src="assets/usersIcons/{{currentChatRoom._userResponses[1].PhotoUrl}}"alt=" Image"/>
+
+  </div>
     <h2>{{currentChatRoom?.roomName}}</h2>
    </div>
    <div class="topIcons">
     <img src="assets/icons/call.svg"alt=" Image"/>
     <img src="assets/icons/video.svg"alt=" Image"/>
     <img src="assets/icons/infocircle.svg"alt=" Image"/>
-    <div *ngIf ="currentChatRoom?.admin === currentUserEmail">
-      <button (click)="toggleList()">add user</button>
-      <button (click)="toggleRemoveList()">remove user</button>
+    <div class="expand">
+      <img [class.rotate]="extraButtonToggled" (click)="toggleExtra() ; $event.stopPropagation();" class="toggleButton-img" src="assets/icons/arrow-narrow-circle-broken-left-svgrepo-com.svg" alt="arrow icon">
+
+    <div  class="btnItems" (click)="$event.stopPropagation(); "class="extra" *ngIf ="currentChatRoom?.admin === currentUserEmail && extraButtonToggled">
+      <button class="btnItem" (click)="deleteRoom()">delete</button>
+      <button class="btnItem"  (click)="toggleList()">add user</button>
+      <button class="btnItem" (click)="toggleRemoveList()">remove user</button>
     </div>
+  </div>
    </div>
   </div>
 
   <div class="mid">
 
     <div *ngFor="let item of messageList;let i =index">
-      <div [class.div-sent-message]="item.senderId==this.currentCoworker?.Email">
-      <p [class.sent-message]="item.senderId==this.currentCoworker?.Email">
+      <div [class.div-sent-message]="item.senderId==this.userId">
+      <p class="aa" [class.sent-message]="item.senderId==this.userId">
         {{item.content}}
       </p>
     </div>
@@ -65,10 +74,24 @@
 
 
   <div class="bot">
-    <img src="assets/icons/camera.svg"alt=" Image"/>
-    <img src="assets/icons/gallery.svg"alt=" Image"/>
-    <img src="assets/icons/voicecricle.svg"alt=" Image"/>
-    <input type="text" placeholder="Message" [(ngModel)]="message" name="message">
-    <img src="assets/icons/smileys.svg"alt=" Image" (click)="sendMessage()"/>
-  </div>
-  </div>
+    <div class="left_bot">
+     <img src="assets/icons/camera.svg"alt=" Image"/>
+     <img src="assets/icons/gallery.svg"alt=" Image"/>
+     <img src="assets/icons/voicecricle.svg"alt=" Image"/>
+   </div>
+   <div class="right_bot">
+     <input id="texting" type="text" placeholder="Message" [(ngModel)]="message" name ="message">
+<button id="sendButton" (click)="sendMessage()">
+    <div class="svg-wrapper-1">
+      <div class="svg-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+          <path fill="none" d="M0 0h24v24H0z"></path>
+          <path fill="currentColor" d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path>
+        </svg>
+      </div>
+    </div>
+    <span>Send</span>
+  </button>   </div>
+   </div>
+   </div>
+

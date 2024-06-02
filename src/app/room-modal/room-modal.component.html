@@ -1,11 +1,13 @@
 <!-- room-modal.component.html -->
-<h2 mat-dialog-title>Add Room</h2>
-<div mat-dialog-content>
-  <mat-form-field>
-    <input matInput placeholder="Enter room name" [(ngModel)]="roomName">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onCancelClick()">Cancel</button>
-  <button mat-button color="primary" [disabled]="!roomName" (click)="onAddRoomClick(roomName)">Add Room</button>
+<div class="add-room-dialog">
+  <h2 class="dialog-title">Add Room</h2>
+  <div class="dialog-content">
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Enter room name" [(ngModel)]="roomName">
+    </mat-form-field>
+  </div>
+  <div class="dialog-actions">
+    <button mat-button class="cancel-btn" (click)="onCancelClick()">Cancel</button>
+    <button mat-button class="add-room-btn" color="primary" [disabled]="!roomName" (click)="onAddRoomClick(roomName)">Add Room</button>
+  </div>
 </div>

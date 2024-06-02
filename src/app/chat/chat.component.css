@@ -1,11 +1,3 @@
-:host {
-  flex: 1; /* Fill parent's width */
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  background-color: #f8f8f8; /* Light background for the chat area */
-}
 
 .top {
   display: flex;
@@ -13,7 +5,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1em;
-  background-color: #ffffff; /* White background for the header */
+  background-color: #f8f9fb; /* White background for the header */
   border-bottom: 1px solid #e0e0e0; /* Subtle border for separation */
 }
 
@@ -44,6 +36,7 @@
 }
 
 .topIcons img {
+
   width: 25px;
   height: 25px;
   cursor: pointer;
@@ -55,9 +48,26 @@
 }
 
 .mid{
-  height: 500px;
+background-color: #f8f9fb;
+height: 634px;
   overflow: auto;
 }
+
+/* Styles for WebKit-based browsers */
+.mid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mid::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.mid::-webkit-scrollbar-thumb {
+  background-color: #007aff;
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
+
 
 .mid .div-sent-message {
   display: flex;
@@ -69,18 +79,31 @@
   display: inline-block;
   padding: 0.75em 1em;
   border-radius: 12px;
-  background-color: #e1f5fe; /* Light blue background for received messages */
-  color: #333; /* Dark text for better readability */
+background-color: #eaeaea;
+ color: #000000; /* Dark text for better readability */
   max-width: 60%;
 }
 
 .mid .sent-message-reply {
   background-color: #4a90e2; /* Blue background for sent messages */
   color: #fff; /* White text for sent messages */
-  align-self: flex-end;
+}
+
+.aa{
+  display: inline-block;
+  padding: 0.75em 1em;
+  text-align: right;
+margin: 5px;
+  border-radius: 12px;
+background-color: #007aff;
+  color: #ffffff; /* Dark text for better readability */
+  max-width: 60%;
+
 }
 
 .bot {
+ overflow: auto;
+
   display: flex;
   align-items: center;
   padding: 1em;
@@ -132,4 +155,67 @@
 
 .right_bot img:hover {
   transform: scale(1.1); /* Enlarge on hover */
+}
+
+
+
+
+
+/* send button style */
+#sendButton {
+  font-family: inherit;
+  font-size: 18px;
+  background: linear-gradient(to bottom, #4dc7d9 0%, #66a6ff 100%);
+  color: white;
+  padding: 0.8em 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 25px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+}
+
+#sendButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+#sendButton:active {
+  transform: scale(0.95);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#sendButton span {
+  display: block;
+  margin-left: 0.4em;
+  transition: all 0.3s;
+}
+
+#sendButton svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+  transition: all 0.3s;
+}
+
+#sendButton .svg-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-right: 0.5em;
+  transition: all 0.3s;
+}
+
+#sendButton:hover .svg-wrapper {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+#sendButton:hover svg {
+  transform: rotate(45deg);
 }

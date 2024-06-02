@@ -1,0 +1,7 @@
+<div class=".logo-logout">
+  <img  (click)="showEdit()" src="assets/usersIcons/{{user?.PhotoUrl}}" alt="Your Image" />
+  <h3>{{user?.Firstname +" "+user?.Lastname}}</h3>
+
+</div>
+
+<button id="logoutBtn" (click)="logout()">Logout </button>

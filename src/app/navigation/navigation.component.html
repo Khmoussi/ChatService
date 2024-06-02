@@ -2,27 +2,27 @@
 <div class="nav">
   <div class=".logo-logout">
     <h1>Chats</h1>
-    <button (click)="showEdit()">Edit</button>
+  </div>
+  <div class="searItems">
   <div class="search">
   <img src="/assets/icons/messagesearch.svg" alt="messagesearch">
   <input type="text" placeholder="search a chatroom"/>
 
-  </div>
-<button id="logoutBtn" (click)="logout()"> </button>
 </div>
 <div class="items">
   <div class="item" (click)="navigateToCoworkerList()">
-    <img class="itemImg" src="assets/icons/messages3.svg"/>
-    <h4>Coworkers</h4>
+    <img class="itemImg" src="/assets/icons/people.svg"/>
+    Coworkers
   </div>
   <div class="item" (click)="navigateToGroupChat()">
     <img class="itemImg" src="/assets/icons/people.svg"/>
-    <h4>ChatRoom</h4>
+    ChatRoom
   </div>
   <div class="item" (click)="openRoomModal()">
     <img class="itemImg" src="/assets/icons/people.svg"/>
-    <h4>New Room</h4>
+    New Room
   </div>
+</div>
 </div>
 
 </div>

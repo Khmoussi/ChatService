@@ -1,13 +1,14 @@
 
 <div  class="coworker" *ngFor="let item of chatRoomsList; let i =index"
  (click)="selectChatroom(i)"
-  [ngStyle]="{'background-color': (  item.id==currentChatroom?.id) ? 'blue' : '#F8F8F8'}">
-<img src="assets/icons/coworker.jpg"alt="Your Image"/>
-  <div>
-    <div class="txt">
+  [ngStyle]="{'background-color': (  item.id==currentChatroom?.id) ? '#3596ff' : '#007aff'}">
+  <div class="roomPicture">
+    <img class="img1" src="assets/usersIcons/{{item._userResponses[0].PhotoUrl}}"alt=" Image"/>
+    <img *ngIf="item._userResponses.length>1" class="img2" src="assets/usersIcons/{{item._userResponses[1].PhotoUrl}}"alt=" Image"/>
+
+  </div>    <div class="text-container">
   <h3>{{item.roomName}}</h3>
   <p>{{item.roomName}}</p>
 </div>
-
-</div>
+<span class="time">12§10§2012</span>
 </div>
